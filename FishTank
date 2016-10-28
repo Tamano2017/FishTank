@@ -1,0 +1,162 @@
+var centerX;
+var bCenterY;
+var centerY;
+
+
+    background(89, 216, 255);
+    fill(90, 90, 90);
+rect(0, 370, 1000, 30);
+fill(50, 50, 50);
+rect(0, 300, 200, 200);
+triangle(200, 300, 200, 400, 400, 400);
+beginShape();
+noStroke();
+fill(67, 247, 124);
+curveVertex(184,  291);
+curveVertex(100,  309);
+curveVertex(168,  119);
+curveVertex(140,  17);
+curveVertex(140,  147);
+curveVertex(132, 313);
+curveVertex(132, 106);
+endShape();
+
+beginShape();
+noStroke();
+fill(67, 247, 124);
+curveVertex(184,  291);
+curveVertex(3,  309);
+curveVertex(16,  119);
+curveVertex(14,  17);
+curveVertex(94,  147);
+curveVertex(90, 313);
+curveVertex(132, 106);
+endShape();
+
+
+var drawUrchin= function(octoX,octoY,octoSize){
+line(octoX,octoY,octoX+octoSize/2,octoY+octoSize/2);
+line(octoX,octoY,octoX-octoSize/2,octoY+octoSize/2);
+line(octoX,octoY,octoX+octoSize/2,octoY-octoSize/2);
+line(octoX,octoY,octoX-octoSize/2,octoY-octoSize/2);
+line(octoX,octoY,octoX,octoY+octoSize/1.3);
+line(octoX,octoY,octoX,octoY-octoSize/1.3);
+line(octoX,octoY,octoX+octoSize/1.4,octoY);
+line(octoX,octoY,octoX-octoSize/1.4,octoY);
+
+noStroke();
+fill(random(0,255), random(0,255), random(0,255));
+ellipse(octoX,octoY,octoSize,octoSize);
+
+fill(0, 0, 0);
+ellipse(octoX-octoSize/5,octoY,octoSize/10,octoSize/10); 
+ellipse(octoX+octoSize/5,octoY,octoSize/10,octoSize/10);
+noFill();
+stroke(0, 0, 0);
+strokeWeight(3);
+ellipse(octoX,octoY+octoSize/6,octoSize/9,octoSize/9);
+};
+
+
+
+var drawFish = function(bodyLength, bodyHeight, bodyColor){
+    centerX = random(20, 400);
+    bodyColor = color(random(0, 255), random(0, 255), random(0, 255));
+    centerY = random(20, 350);
+    bCenterY = centerY;
+bodyLength = 118;
+bodyHeight = 74;
+
+
+noStroke();
+fill(bodyColor);
+// body
+ellipse(centerX, centerY, bodyLength, bodyHeight);
+// tail
+var tailWidth = bodyLength/4;
+var tailHeight = bodyHeight/2;
+triangle(centerX-bodyLength/2, centerY,
+         centerX-bodyLength/2-tailWidth, centerY-tailHeight,
+         centerX-bodyLength/2-tailWidth, centerY+tailHeight);
+// eye
+fill(33, 33, 33);
+ellipse(centerX+bodyLength/4, centerY, bodyHeight/5, bodyHeight/5);
+ fill(255, 255, 255);
+   ellipse(centerX + 40, bCenterY - 20, 10, 10);
+    ellipse(centerX + 40, bCenterY - 40, 10, 10);
+    ellipse(centerX + 40, bCenterY - 60, 10, 10);
+
+};
+
+
+var drawSmallFish = function(bodyLength, bodyHeight, bodyColor){
+centerX = random (50, 400);
+centerY = random(1, 400);
+bCenterY = centerY;
+bodyColor = color(random(0, 255), random(0, 255), random(0, 255));
+ 
+     
+bodyLength = 50;
+bodyHeight = 10;
+
+noStroke();
+fill(bodyColor);
+// body
+ellipse(centerX, centerY, bodyLength, bodyHeight);
+// tail
+var tailWidth = bodyLength/4;
+var tailHeight = bodyHeight/2;
+triangle(centerX-bodyLength/2, centerY,
+         centerX-bodyLength/2-tailWidth, centerY-tailHeight,
+         centerX-bodyLength/2-tailWidth, centerY+tailHeight);
+// eye
+fill(33, 33, 33);
+ellipse(centerX+bodyLength/4, centerY, bodyHeight/5, bodyHeight/5);
+ fill(255, 255, 255);
+    ellipse(centerX + 20, centerY - 20, 10, 10);
+    ellipse(centerX + 20, centerY - 40, 10, 10);
+    ellipse(centerX + 20, centerY - 60, 10, 10);
+};
+
+var drawBigFish = function(bodyLength, bodyHeight, bodyColor){
+    fill(255, 255, 255);
+    ellipse(centerX + 40, centerY - 20, 10, 10);
+    ellipse(centerX + 40, centerY - 40, 10, 10);
+    ellipse(centerX + 40, centerY - 60, 10, 10);centerX = random (100, 300);
+centerY = random(1, 300);
+bCenterY = centerY;
+bodyLength = 200;
+bodyHeight = 100;
+bodyColor = color(random(0, 255), random(0, 255), random(0, 255));
+
+noStroke();
+fill(bodyColor);
+// body
+ellipse(centerX, centerY, bodyLength, bodyHeight);
+// tail
+var tailWidth = bodyLength/2;
+var tailHeight = bodyHeight/2;
+triangle(centerX-bodyLength/2, centerY,
+         centerX-bodyLength/2-tailWidth, centerY-tailHeight,
+         centerX-bodyLength/2-tailWidth, centerY+tailHeight);
+// eye
+fill(33, 33, 33);
+ellipse(centerX+bodyLength/4, centerY, bodyHeight/5, bodyHeight/5);
+ fill(255, 255, 255);
+    ellipse(centerX + 80, centerY - 20, 10, 10);
+    ellipse(centerX + 80, centerY - 40, 10, 10);
+    ellipse(centerX + 80, centerY - 60, 10, 10);
+};
+var amtOfFish = random(1, 10);
+var amtOfUrchins = random(1, 5);
+var i = 0;
+var j = 0;
+while (i < amtOfFish){
+    i++;
+    drawFish();
+}
+
+while (j < amtOfFish){
+    j++;
+    drawUrchin(random(50,300),random(50,300),random(10,100));
+    drawEel(random(0,200),random(0,200));
