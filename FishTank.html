@@ -1,0 +1,138 @@
+<html>
+	<head>
+		<title>UrchinTank 2.0</title>
+		<script src="http://cloud.github.com/downloads/processing-js/processing-js/processing-1.4.1.min.js"></script>
+		<script type="text/processing" data-processing-target="mycanvas">
+        // Declare and contruct two objects (h1, h2) from the class HorizontalLine 
+        
+        // Declare and contruct two objects (h1, h2) from the class HorizontalLine 
+        
+        HorizontalLine slowLine = new HorizontalLine(20, 2.0); 
+        
+        HorizontalLine fastLine = new HorizontalLine(50, 2.5);
+        
+        Urchin randomUrchin = new Urchin();  
+        
+        int WINDOW_WIDTH = 600;
+        int WINDOW_HEIGHT = 600;
+        
+        int REFRESH_RATE_PER_SECOND = 30;
+        //runs once at the start of the program 
+        void setup() 
+        {
+          size(WINDOW_WIDTH, WINDOW_HEIGHT);
+        
+          frameRate(REFRESH_RATE_PER_SECOND);//how often per second the draw function is called 
+        
+        }
+        
+        
+        //called repeatedly 
+        void draw() { 
+        
+          background(0,255,255);
+        
+          slowLine.updateAndRedraw(); 
+        
+          fastLine.updateAndRedraw();  
+          
+          randomUrchin.drawUrchin();
+        
+        } 
+        
+         
+        
+        class HorizontalLine { 
+          
+          //attributes
+          float ypos, speed; 
+        
+          //constructor 
+          HorizontalLine (float y, float s) {  
+        
+            ypos = y; 
+        
+            speed = s; 
+        
+          } 
+          
+          void updateAndRedraw() {
+          	update();
+          	drawLine();
+          }
+          
+          void update() 
+          { 
+        
+            ypos += speed; 
+        
+            if (ypos > height) 
+            { 
+        
+              ypos = 0; 
+        
+            } 
+        
+        
+          } 
+          
+          void drawLine() 
+          {
+          	 line(0, ypos, width, ypos); 
+		  }
+        
+        }
+        
+        class Urchin 
+        {
+        	//attributes 
+          var x, y, size, color1, color2, color3;
+        	
+        	//constructor 
+        	Urchin()
+        	{
+        		//attributes on the left, parameters on the right
+        		x = random(1,400);
+            y = random(1,400);
+            size = random(50,100);
+            color1 = random(0,255);
+            color2 = random(0,255);
+            color3 = random(0,255); 
+        		
+        	}
+        	
+        	void drawUrchin()
+        	{
+            line(x,y,x+size/2,y+size/2);
+            line(x,y,x-size/2,y+size/2);
+            line(x,y,x+size/2,y-size/2);
+            line(x,y,x-size/2,y-size/2);
+            line(x,y,x,y+size/1.3);
+            line(x,y,x,y-size/1.3);
+            line(x,y,x+size/1.4,y);
+            line(x,y,x-size/1.4,y);
+
+            noStroke();
+            fill(color1, color2, color3);
+            ellipse(x,y,size,size);
+
+            fill(0, 0, 0);
+            ellipse(x-size/5,y,size/10,size/10); 
+            ellipse(x+size/5,y,size/10,size/10);
+            noFill();
+            stroke(0, 0, 0);
+            strokeWeight(3);
+            ellipse(x,y+size/6,size/9,size/9);
+            x++;
+        	
+        	}
+        
+        }
+        </script> 
+    </head>
+    
+    <body>
+		<canvas id="mycanvas"></canvas>
+	</body>
+</html>
+    
