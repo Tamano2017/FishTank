@@ -7,10 +7,6 @@
         
         // Declare and contruct two objects (h1, h2) from the class HorizontalLine 
         
-        HorizontalLine slowLine = new HorizontalLine(20, 2.0); 
-        
-        HorizontalLine fastLine = new HorizontalLine(50, 2.5);
-        
         Urchin randomUrchin = new Urchin();  
         
         int WINDOW_WIDTH = 600;
@@ -30,58 +26,12 @@
         //called repeatedly 
         void draw() { 
         
-          background(0,255,255);
-        
-          slowLine.updateAndRedraw(); 
-        
-          fastLine.updateAndRedraw();  
+          background(0,255,255); 
           
           randomUrchin.drawUrchin();
         
         } 
         
-         
-        
-        class HorizontalLine { 
-          
-          //attributes
-          float ypos, speed; 
-        
-          //constructor 
-          HorizontalLine (float y, float s) {  
-        
-            ypos = y; 
-        
-            speed = s; 
-        
-          } 
-          
-          void updateAndRedraw() {
-          	update();
-          	drawLine();
-          }
-          
-          void update() 
-          { 
-        
-            ypos += speed; 
-        
-            if (ypos > height) 
-            { 
-        
-              ypos = 0; 
-        
-            } 
-        
-        
-          } 
-          
-          void drawLine() 
-          {
-          	 line(0, ypos, width, ypos); 
-		  }
-        
-        }
         
         class Urchin 
         {
