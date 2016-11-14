@@ -1,0 +1,193 @@
+<html>
+    <head>
+        <title>UrchinTank 2.0</title>
+        <script src="http://cloud.github.com/downloads/processing-js/processing-js/processing-1.4.1.min.js"></script>
+        <script type="text/processing" data-processing-target="mycanvas">
+        // Declare and contruct two objects (h1, h2) from the class HorizontalLine 
+        
+        // Declare and contruct two objects (h1, h2) from the class HorizontalLine 
+        
+        HorizontalLine slowLine = new HorizontalLine(20, 2.0); 
+        
+        HorizontalLine fastLine = new HorizontalLine(50, 2.5);
+        
+        Urchin randomUrchin = new Urchin();  
+        Fish randomFish = new Fish();
+        
+        int WINDOW_WIDTH = 600;
+        int WINDOW_HEIGHT = 600;
+        
+        int REFRESH_RATE_PER_SECOND = 30;
+        int GREY = 204;
+        //runs once at the start of the program 
+        void setup() 
+        {
+        
+          size(WINDOW_WIDTH, WINDOW_HEIGHT);
+        
+          frameRate(REFRESH_RATE_PER_SECOND);//how often per second the draw function is called 
+        
+        }
+        
+        
+        //called repeatedly 
+        void draw() { 
+        
+          background(GREY);
+        
+          slowLine.updateAndRedraw(); 
+        
+          fastLine.updateAndRedraw();  
+          
+          randomUrchin.drawUrchin();
+
+          randomFish.drawFish();
+        
+        } 
+        
+         
+        
+        class HorizontalLine { 
+          
+          //attributes
+          float ypos, speed; 
+        
+          //constructor 
+          HorizontalLine (float y, float s) {  
+        
+            ypos = y; 
+        
+            speed = s; 
+        
+          } 
+          
+          void updateAndRedraw() {
+              update();
+              drawLine();
+          }
+          
+          void update() 
+          { 
+        
+            ypos += speed; 
+        
+            if (ypos > height) 
+            { 
+        
+              ypos = 0; 
+        
+            } 
+        
+        
+          } 
+          
+          void drawLine() 
+          {
+               line(0, ypos, width, ypos); 
+          }
+        
+        }
+        
+        class Urchin 
+        {
+            //attributes 
+          var x, y, size, color;
+            
+            //constructor 
+            Urchin()
+            {
+                //attributes on the left, parameters on the right
+            x = random(1,400);
+            y = random(1,400);
+            color = random(0, 255);
+            color1 = random(0, 255);
+            color2 = random(0, 255);
+            size = random(10,50); 
+                
+            }
+            
+            void drawUrchin()
+            {
+            line(x,y,x+size/2,y+size/2);
+            line(x,y,x-size/2,y+size/2);
+            line(x,y,x+size/2,y-size/2);
+            line(x,y,x-size/2,y-size/2);
+            line(x,y,x,y+size/1.3);
+            line(x,y,x,y-size/1.3);
+            line(x,y,x+size/1.4,y);
+            line(x,y,x-size/1.4,y);
+
+            noStroke();
+            fill(color, color1, color2);
+            ellipse(x,y,size,size);
+
+            fill(0, 0, 0);
+            ellipse(x-size/5,y,size/10,size/10); 
+            ellipse(x+size/5,y,size/10,size/10);
+            noFill();
+            stroke(0, 0, 0);
+            strokeWeight(3);
+            ellipse(x,y+size/6,size/9,size/9);
+            x++;
+            }
+        
+        }
+
+        class Fish{
+
+          var bodyLength, bodyHeight, color, bCenterY, centerX, centerY, speed, bCenterX;
+
+          Fish(){
+            speed = 10;
+            centerY = random(20, 400);
+            centerX = random(20, 400);
+            color = random(0, 255);
+            color1 = random(0, 255);
+            color2 = random(0, 255);
+            centerY = random(20, 350);
+            bCenterY = centerY;
+            bodyLength = 118;
+            bCenterX = centerX;
+            bodyHeight = 74;
+            }
+            void drawFish() {
+              noStroke();
+              fill(color, color1, color2);
+              // body
+              ellipse(centerX, centerY, bodyLength, bodyHeight);
+              // tail
+              var tailWidth = bodyLength/4;
+              var tailHeight = bodyHeight/2;
+              triangle(centerX-bodyLength/2, centerY,
+              centerX-bodyLength/2-tailWidth, centerY-tailHeight,
+              centerX-bodyLength/2-tailWidth, centerY+tailHeight);
+              // eye
+              fill(33, 33, 33);
+              ellipse(centerX+bodyLength/4, centerY, bodyHeight/5, bodyHeight/5);
+              fill(255, 255, 255);
+              ellipse(bCenterX + 40, bCenterY - 20, 10, 10);
+              ellipse(bCenterX + 40, bCenterY - 40, 10, 10);
+              ellipse(bCenterX + 40, bCenterY - 60, 10, 10);
+              centerX += speed;
+              bCenterX != centerX;
+              bCenterY--;
+              if (bCenterY == 0){
+                bCenterX = centerX;
+                bCenterY = centerY;
+              }
+              if (centerX > 750){
+                centerX = 0;
+                centerY = random (20, 400);
+              }
+
+
+          }
+
+}          
+        </script> 
+    </head>
+    
+    <body>
+        <canvas id="mycanvas"></canvas>
+    </body>
+</html>
