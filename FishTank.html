@@ -7,10 +7,12 @@
         
         // Declare and contruct two objects (h1, h2) from the class HorizontalLine 
         
-        Urchin randomUrchin = new Urchin();  
+        Urchin randomUrchin = new Urchin(); 
+
+        Eel randomEel = new Eel(); 
         
-        int WINDOW_WIDTH = 600;
-        int WINDOW_HEIGHT = 600;
+        int WINDOW_WIDTH = 1000;
+        int WINDOW_HEIGHT = 1500;
         
         int REFRESH_RATE_PER_SECOND = 30;
         //runs once at the start of the program 
@@ -27,12 +29,44 @@
         void draw() { 
         
           background(0,255,255); 
-          
+
           randomUrchin.drawUrchin();
+
+          randomEel.drawEel();
         
         } 
+        class Eel 
+        {
+          //attributes 
+          var eelX, eelY, color1, color2, color3;
+          
+          //constructor 
+          Eel()
+          {
+            //attributes on the left, parameters on the right
+            eelX = random(1,100);
+            eelY = random(1,100);
+            color1 = random(0,255);
+            color2 = random(0,255);
+            color3 = random(0,255); 
+            
+          }
+          
+          void drawEel()
+          {
+            strokeWeight(1);
+            beginShape();
+            fill(color1, color2, color3);
+            curveVertex(518+eelX, 475+eelY);
+            curveVertex(257+eelX, 307+eelY);
+            curveVertex(169+eelX, 245+eelY);
+            curveVertex(96+eelX,  246+eelY);
+            curveVertex(253+eelX, 307+eelY);
+            curveVertex(93+eelX, 118+eelY);
+            endShape();
+          }
         
-        
+        }
         class Urchin 
         {
         	//attributes 
