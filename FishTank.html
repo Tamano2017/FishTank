@@ -11,17 +11,27 @@
 
         Eel randomEel = new Eel(); 
         
-        int WINDOW_WIDTH = 1000;
-        int WINDOW_HEIGHT = 1500;
+        int WINDOW_WITH = 600;
+        int WINDOW_HEIGHT = 600;
         
         int REFRESH_RATE_PER_SECOND = 30;
+        
+        ArrayList<Urchin> UrchinList;
+
         //runs once at the start of the program 
         void setup() 
         {
           size(WINDOW_WIDTH, WINDOW_HEIGHT);
-        
+       
           frameRate(REFRESH_RATE_PER_SECOND);//how often per second the draw function is called 
-        
+          
+          UrchinList = new ArrayList<Urchin>(); //guarantees the only thing in the arrayList is Fish 
+
+          var numberOfUrchin = random(1,10);
+
+          for(var i = 0; i < numberOfUrchin; i++) {
+            UrchinList.add(new Urchin()); //assuming no parameters in your constructor
+          }
         }
         
         
@@ -30,8 +40,10 @@
         
           background(0,255,255); 
 
-          randomUrchin.drawUrchin();
-
+          randomUrchin.drawUrchin();for(var i = 0; i < UrchinList.size(); i++) {
+            Urchin currentUrchin = UrchinList.get(i); 
+            currentUrchin.drawUrchin();
+          }
           randomEel.drawEel();
         
         } 
@@ -57,12 +69,12 @@
             strokeWeight(1);
             beginShape();
             fill(color1, color2, color3);
-            curveVertex(518+eelX, 475+eelY);
-            curveVertex(257+eelX, 307+eelY);
-            curveVertex(169+eelX, 245+eelY);
-            curveVertex(96+eelX,  246+eelY);
-            curveVertex(253+eelX, 307+eelY);
-            curveVertex(93+eelX, 118+eelY);
+            curveVertex(418+eelX, 375+eelY);
+            curveVertex(157+eelX, 207+eelY);
+            curveVertex(69+eelX, 145+eelY);
+            curveVertex(eelX-4,  146+eelY);
+            curveVertex(153+eelX, 207+eelY);
+            curveVertex(eelX-7, 18+eelY);
             endShape();
           }
         
@@ -112,6 +124,7 @@
         	}
         
         }
+
         </script> 
     </head>
     
