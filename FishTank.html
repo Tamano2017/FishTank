@@ -6,94 +6,99 @@
         // Declare and contruct two objects (h1, h2) from the class HorizontalLine 
         
         // Declare and contruct two objects (h1, h2) from the class HorizontalLine 
+      
         
-        HorizontalLine slowLine = new HorizontalLine(20, 2.0); 
-        
-        HorizontalLine fastLine = new HorizontalLine(50, 2.5);
-        
-        Urchin randomUrchin = new Urchin();  
-        
-        int WINDOW_WIDTH = 600;
+        int WINDOW_WITH = 600;
         int WINDOW_HEIGHT = 600;
         
         int REFRESH_RATE_PER_SECOND = 30;
+        
+        ArrayList<Urchin> UrchinList;
+
+        ArrayList<Eel> EelList;
+
         //runs once at the start of the program 
         void setup() 
         {
           size(WINDOW_WIDTH, WINDOW_HEIGHT);
-        
+       
           frameRate(REFRESH_RATE_PER_SECOND);//how often per second the draw function is called 
-        
+
+          var numberOfUrchin = random(1,10);
+
+          var numberOfEel = random(1,5);
+
+          for(var i = 0; i < numberOfUrchin; i++) {
+            UrchinList.add(new Urchin(i*10)); //assuming no parameters in your constructor
+          }
+
+
+          for(var b = 0; b < numberOfEel; b++) {
+            EelList.add(new Eel(b*20)); //assuming no parameters in your constructor
+          }
         }
         
         
         //called repeatedly 
         void draw() { 
         
-          background(0,255,255);
-        
-          slowLine.updateAndRedraw(); 
-        
-          fastLine.updateAndRedraw();  
-          
+          background(0,255,255); 
+
           randomUrchin.drawUrchin();
+          for(var i = 0; i < UrchinList.size(); i++) {
+            Urchin currentUrchin = UrchinList.get(i); 
+            currentUrchin.drawUrchin(i*10);
+          }
+
+           randomEel.drawEel();for(var b = 0; b < EelList.size(); b++) {
+            Eel currentEel = EelList.get(b); 
+            currentEel.drawEel(b*20);
+          }
         
         } 
-        
-         
-        
-        class HorizontalLine { 
+        class Eel 
+        {
+          //attributes 
+          var eelX, Y, color1, color2, color3;
           
-          //attributes
-          float ypos, speed; 
-        
           //constructor 
-          HorizontalLine (float y, float s) {  
-        
-            ypos = y; 
-        
-            speed = s; 
-        
-          } 
-          
-          void updateAndRedraw() {
-          	update();
-          	drawLine();
+          Eel(var eelY)
+          {
+            //attributes on the left, parameters on the right
+            eelX = random(1,100);
+            Y = eelY;
+            color1 = random(0,255);
+            color2 = random(0,255);
+            color3 = random(0,255); 
+            
           }
           
-          void update() 
-          { 
-        
-            ypos += speed; 
-        
-            if (ypos > height) 
-            { 
-        
-              ypos = 0; 
-        
-            } 
-        
-        
-          } 
-          
-          void drawLine() 
+          void drawEel()
           {
-          	 line(0, ypos, width, ypos); 
-		  }
+            strokeWeight(1);
+            beginShape();
+            fill(color1, color2, color3);
+            curveVertex(418+eelX, 375+eelY);
+            curveVertex(157+eelX, 207+eelY);
+            curveVertex(69+eelX, 145+eelY);
+            curveVertex(eelX-4,  146+eelY);
+            curveVertex(153+eelX, 207+eelY);
+            curveVertex(eelX-7, 18+eelY);
+            endShape();
+          }
         
         }
-        
         class Urchin 
         {
         	//attributes 
-          var x, y, size, color1, color2, color3;
+          var x, centerY, size, color1, color2, color3;
         	
         	//constructor 
-        	Urchin()
+        	Urchin(var y)
         	{
-        		//attributes on the left, parameters on the right
+        		//attributes on the lefTarameters on the right
         		x = random(1,400);
-            y = random(1,400);
+            centerY = y;
             size = random(50,100);
             color1 = random(0,255);
             color2 = random(0,255);
@@ -128,6 +133,7 @@
         	}
         
         }
+
         </script> 
     </head>
     
