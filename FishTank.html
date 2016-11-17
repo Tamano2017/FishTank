@@ -6,10 +6,7 @@
         // Declare and contruct two objects (h1, h2) from the class HorizontalLine 
         
         // Declare and contruct two objects (h1, h2) from the class HorizontalLine 
-        
-        Urchin randomUrchin = new Urchin(); 
-
-        Eel randomEel = new Eel(); 
+      
         
         int WINDOW_WITH = 600;
         int WINDOW_HEIGHT = 600;
@@ -18,19 +15,26 @@
         
         ArrayList<Urchin> UrchinList;
 
+        ArrayList<Eel> EelList;
+
         //runs once at the start of the program 
         void setup() 
         {
           size(WINDOW_WIDTH, WINDOW_HEIGHT);
        
           frameRate(REFRESH_RATE_PER_SECOND);//how often per second the draw function is called 
-          
-          UrchinList = new ArrayList<Urchin>(); //guarantees the only thing in the arrayList is Fish 
 
           var numberOfUrchin = random(1,10);
 
+          var numberOfEel = random(1,5);
+
           for(var i = 0; i < numberOfUrchin; i++) {
-            UrchinList.add(new Urchin()); //assuming no parameters in your constructor
+            UrchinList.add(new Urchin(i*10)); //assuming no parameters in your constructor
+          }
+
+
+          for(var b = 0; b < numberOfEel; b++) {
+            EelList.add(new Eel(b*20)); //assuming no parameters in your constructor
           }
         }
         
@@ -40,24 +44,29 @@
         
           background(0,255,255); 
 
-          randomUrchin.drawUrchin();for(var i = 0; i < UrchinList.size(); i++) {
+          randomUrchin.drawUrchin();
+          for(var i = 0; i < UrchinList.size(); i++) {
             Urchin currentUrchin = UrchinList.get(i); 
-            currentUrchin.drawUrchin();
+            currentUrchin.drawUrchin(i*10);
           }
-          randomEel.drawEel();
+
+           randomEel.drawEel();for(var b = 0; b < EelList.size(); b++) {
+            Eel currentEel = EelList.get(b); 
+            currentEel.drawEel(b*20);
+          }
         
         } 
         class Eel 
         {
           //attributes 
-          var eelX, eelY, color1, color2, color3;
+          var eelX, Y, color1, color2, color3;
           
           //constructor 
-          Eel()
+          Eel(var eelY)
           {
             //attributes on the left, parameters on the right
             eelX = random(1,100);
-            eelY = random(1,100);
+            Y = eelY;
             color1 = random(0,255);
             color2 = random(0,255);
             color3 = random(0,255); 
@@ -82,14 +91,14 @@
         class Urchin 
         {
         	//attributes 
-          var x, y, size, color1, color2, color3;
+          var x, centerY, size, color1, color2, color3;
         	
         	//constructor 
-        	Urchin()
+        	Urchin(var y)
         	{
-        		//attributes on the left, parameters on the right
+        		//attributes on the lefTarameters on the right
         		x = random(1,400);
-            y = random(1,400);
+            centerY = y;
             size = random(50,100);
             color1 = random(0,255);
             color2 = random(0,255);
