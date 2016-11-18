@@ -11,6 +11,11 @@
         ArrayList<Urchin> urchinList = new ArrayList<Urchin>(); 
         int WINDOW_WIDTH = 600;
         int WINDOW_HEIGHT = 600;
+        PImage o;
+
+    o = loadImage("Ocean.jpg");
+
+    image(o, 0, 0);
         
         int REFRESH_RATE_PER_SECOND = 30;
         //runs once at the start of the program 
@@ -28,14 +33,16 @@
           for(var b = 0; b< numberOfUrchin; b++) {
             urchinList.add(new Urchin(b*150));
           }
-        
+
+         o = loadImage("Ocean.jpg");
+     
         }
         
         
         //called repeatedly 
         void draw() { 
-        
-          background(0,255,255); 
+    
+          image(o, 0, 0);
           
           for(var i = 0; i < EelList.size(); i++) {
           	Eel currentEel = EelList.get(i);
@@ -55,7 +62,7 @@
             Urchin(var UrchinY)
             {
                 //attributes on the left, parameters on the right
-                x = random(1,200);
+                x = random(1,210);
             y = UrchinY;
             size = random(50,100);
             color1 = random(0,255);
