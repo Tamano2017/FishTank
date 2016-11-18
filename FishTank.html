@@ -1,41 +1,34 @@
 <html>
 	<head>
-		<title>UrchinTank 2.0</title>
+		<title>EelTank 2.0</title>
 		<script src="http://cloud.github.com/downloads/processing-js/processing-js/processing-1.4.1.min.js"></script>
 		<script type="text/processing" data-processing-target="mycanvas">
-        // Declare and contruct two objects (h1, h2) from the class HorizontalLine 
-        
-        // Declare and contruct two objects (h1, h2) from the class HorizontalLine 
-      
-        
-        int WINDOW_WITH = 600;
+       
+        Eel randomEel = new Eel();
+        ArrayList<Eel> EelList = new ArrayList<Eel>();   
+        Urchin randomUrchin = new Urchin();
+
+        ArrayList<Urchin> urchinList = new ArrayList<Urchin>(); 
+        int WINDOW_WIDTH = 600;
         int WINDOW_HEIGHT = 600;
         
         int REFRESH_RATE_PER_SECOND = 30;
-        
-        ArrayList<Urchin> UrchinList;
-
-        ArrayList<Eel> EelList;
-
         //runs once at the start of the program 
         void setup() 
         {
           size(WINDOW_WIDTH, WINDOW_HEIGHT);
-       
+        
           frameRate(REFRESH_RATE_PER_SECOND);//how often per second the draw function is called 
-
-          var numberOfUrchin = random(1,10);
-
-          var numberOfEel = random(1,5);
-
-          for(var i = 0; i < numberOfUrchin; i++) {
-            UrchinList.add(new Urchin(i*10)); //assuming no parameters in your constructor
+          
+          var numberOfEel = random(3,5); 
+          for(var i = 0; i< numberOfEel; i++) {
+          	EelList.add(new Eel(i*100));
           }
-
-
-          for(var b = 0; b < numberOfEel; b++) {
-            EelList.add(new Eel(b*20)); //assuming no parameters in your constructor
+          var numberOfUrchin = random(3,10); 
+          for(var b = 0; b< numberOfUrchin; b++) {
+            urchinList.add(new Urchin(b*150));
           }
+        
         }
         
         
@@ -43,71 +36,36 @@
         void draw() { 
         
           background(0,255,255); 
-
-          randomUrchin.drawUrchin();
-          for(var i = 0; i < UrchinList.size(); i++) {
-            Urchin currentUrchin = UrchinList.get(i); 
-            currentUrchin.drawUrchin(i*10);
+          
+          for(var i = 0; i < EelList.size(); i++) {
+          	Eel currentEel = EelList.get(i);
+          	currentEel.drawEel();
           }
-
-           randomEel.drawEel();for(var b = 0; b < EelList.size(); b++) {
-            Eel currentEel = EelList.get(b); 
-            currentEel.drawEel(b*20);
+        for(var b = 0; b < urchinList.size(); b++) {
+            Urchin currentUrchin = urchinList.get(b);
+            currentUrchin.drawUrchin();
           }
-        
         } 
-        class Eel 
-        {
-          //attributes 
-          var eelX, Y, color1, color2, color3;
-          
-          //constructor 
-          Eel(var eelY)
-          {
-            //attributes on the left, parameters on the right
-            eelX = random(1,100);
-            Y = eelY;
-            color1 = random(0,255);
-            color2 = random(0,255);
-            color3 = random(0,255); 
-            
-          }
-          
-          void drawEel()
-          {
-            strokeWeight(1);
-            beginShape();
-            fill(color1, color2, color3);
-            curveVertex(418+eelX, 375+eelY);
-            curveVertex(157+eelX, 207+eelY);
-            curveVertex(69+eelX, 145+eelY);
-            curveVertex(eelX-4,  146+eelY);
-            curveVertex(153+eelX, 207+eelY);
-            curveVertex(eelX-7, 18+eelY);
-            endShape();
-          }
-        
-        }
         class Urchin 
         {
-        	//attributes 
-          var x, centerY, size, color1, color2, color3;
-        	
-        	//constructor 
-        	Urchin(var y)
-        	{
-        		//attributes on the lefTarameters on the right
-        		x = random(1,400);
-            centerY = y;
+            //attributes 
+          var x, y, size, color1, color2, color3;
+            
+            //constructor 
+            Urchin(var UrchinY)
+            {
+                //attributes on the left, parameters on the right
+                x = random(1,200);
+            y = UrchinY;
             size = random(50,100);
             color1 = random(0,255);
             color2 = random(0,255);
             color3 = random(0,255); 
-        		
-        	}
-        	
-        	void drawUrchin()
-        	{
+                
+            }
+            
+            void drawUrchin()
+            {
             line(x,y,x+size/2,y+size/2);
             line(x,y,x-size/2,y+size/2);
             line(x,y,x+size/2,y-size/2);
@@ -129,11 +87,44 @@
             strokeWeight(3);
             ellipse(x,y+size/6,size/9,size/9);
             x++;
+            
+            }
+        }
+        class Eel 
+        {
+        	//attributes 
+          var eelx, eely, color1, color2, color3;
+        	
+        	//constructor 
+        	Eel(var Pos)
+        	{
+        		//attributes on the left, parameters on the right
+        		eelx = random(200,400);
+            eely = Pos;
+            size = random(50,100);
+            color1 = random(0,255);
+            color2 = random(0,255);
+            color3 = random(0,255); 
+        		
+        	}
+        	
+        	void drawEel()
+        	{
+            strokeWeight(1);
+            beginShape();
+            fill(color1, color2, color3);
+            curveVertex(418+eelx, 375+eely);
+            curveVertex(157+eelx, 207+eely);
+            curveVertex(69+eelx, 145+eely);
+            curveVertex(eelx-4,  146+eely);
+            curveVertex(153+eelx, 207+eely);
+            curveVertex(eelx-7, 18+eely);
+            endShape();
+            eelx++;
         	
         	}
         
         }
-
         </script> 
     </head>
     
@@ -141,4 +132,3 @@
 		<canvas id="mycanvas"></canvas>
 	</body>
 </html>
-    
