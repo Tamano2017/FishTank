@@ -5,10 +5,14 @@
 		<script type="text/processing" data-processing-target="mycanvas">
        
         Eel randomEel = new Eel();
-        ArrayList<Eel> EelList = new ArrayList<Eel>();   
-        Urchin randomUrchin = new Urchin();
+        ArrayList<Eel> EelList = new ArrayList<Eel>(); 
 
+        Urchin randomUrchin = new Urchin();
         ArrayList<Urchin> urchinList = new ArrayList<Urchin>(); 
+
+        Fish randomFish = new Fish();
+        ArrayList<Fish> FishList = new ArrayList<Fish>(); 
+
         int WINDOW_WIDTH = 600;
         int WINDOW_HEIGHT = 600;
         PImage o;
@@ -33,6 +37,11 @@
           for(var b = 0; b< numberOfUrchin; b++) {
             urchinList.add(new Urchin(b*150));
           }
+          var numberOfFish = random(1,4); 
+          for(var z = 0; z < numberOfFish; z++) {
+            FishList.add(new Fish(z*250));
+          }
+
 
          o = loadImage("Ocean.jpg");
      
@@ -52,6 +61,10 @@
             Urchin currentUrchin = urchinList.get(b);
             currentUrchin.drawUrchin();
           }
+          for(var z = 0; z < FishList.size(); z++) {
+            Fish currentFish = FishList.get(z);
+            currentFish.drawFish();
+          }
         } 
         class Urchin 
         {
@@ -62,7 +75,7 @@
             Urchin(var UrchinY)
             {
                 //attributes on the left, parameters on the right
-                x = random(1,210);
+                x = random(-100,190);
             y = UrchinY;
             size = random(50,100);
             color1 = random(0,255);
@@ -73,6 +86,7 @@
             
             void drawUrchin()
             {
+            strokeWeight(1)
             line(x,y,x+size/2,y+size/2);
             line(x,y,x-size/2,y+size/2);
             line(x,y,x+size/2,y-size/2);
@@ -106,7 +120,7 @@
         	Eel(var Pos)
         	{
         		//attributes on the left, parameters on the right
-        		eelx = random(200,400);
+        		eelx = random(220,500);
             eely = Pos;
             size = random(50,100);
             color1 = random(0,255);
@@ -130,8 +144,60 @@
             eelx++;
         	
         	}
-        
+
         }
+
+        class Fish{
+
+          var bodyLength, bodyHeight, color, bCenterY, centerX, centerY, bCenterX;
+        
+         Fish(var Yy){
+            centerY = Yy;
+            centerX = random(100, 100);
+            color = random(0, 255);
+            color1 = random(0, 255);
+            color2 = random(0, 255);
+            bCenterY = centerY;
+            bodyLength = 118;
+            bCenterX = centerX;
+            bodyHeight = 74;
+     
+            }
+            void drawFish() {
+              noStroke();
+              fill(color, color1, color2);
+              // body
+              ellipse(centerX, centerY, bodyLength, bodyHeight);
+              // tail
+              var tailWidth = bodyLength/4;
+              var tailHeight = bodyHeight/2;
+              triangle(centerX-bodyLength/2, centerY,
+              centerX-bodyLength/2-tailWidth, centerY-tailHeight,
+              centerX-bodyLength/2-tailWidth, centerY+tailHeight);
+              // eye
+                fill(33, 33, 33);
+                ellipse(centerX+bodyLength/4, centerY, bodyHeight/5, bodyHeight/5);
+                fill(255, 255, 255);
+                ellipse(bCenterX + 40, bCenterY - 20, 10, 10);
+                ellipse(bCenterX + 40, bCenterY - 40, 10, 10);
+                ellipse(bCenterX + 40, bCenterY - 60, 10, 10);
+                centerX ++;
+                bCenterX != centerX;
+                bCenterY--;
+                
+                if (centerX > 600){
+                    centerX = 0;
+                    centerY = random (20, 400);
+                    bCenterX = centerX;
+                    bCenterY = centerY;
+                    fill(255, 255, 255);
+                    ellipse(bCenterX + 40, bCenterY - 20, 10, 10);
+                    ellipse(bCenterX + 40, bCenterY - 40, 10, 10);
+                    ellipse(bCenterX + 40, bCenterY - 60, 10, 10);
+              }
+              }
+            }
+
         </script> 
     </head>
     
