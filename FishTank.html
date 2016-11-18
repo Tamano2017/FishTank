@@ -1,18 +1,14 @@
 <html>
 	<head>
-		<title>UrchinTank 2.0</title>
+		<title>EelTank 2.0</title>
 		<script src="http://cloud.github.com/downloads/processing-js/processing-js/processing-1.4.1.min.js"></script>
 		<script type="text/processing" data-processing-target="mycanvas">
-        // Declare and contruct two objects (h1, h2) from the class HorizontalLine 
-        
-        // Declare and contruct two objects (h1, h2) from the class HorizontalLine 
-        
-        HorizontalLine slowLine = new HorizontalLine(20, 2.0); 
-        
-        HorizontalLine fastLine = new HorizontalLine(50, 2.5);
-        
-        Urchin randomUrchin = new Urchin();  
-        
+       
+        Eel randomEel = new Eel();
+        ArrayList<Eel> EelList = new ArrayList<Eel>();   
+        Urchin randomUrchin = new Urchin();
+
+        ArrayList<Urchin> urchinList = new ArrayList<Urchin>(); 
         int WINDOW_WIDTH = 600;
         int WINDOW_HEIGHT = 600;
         
@@ -23,6 +19,15 @@
           size(WINDOW_WIDTH, WINDOW_HEIGHT);
         
           frameRate(REFRESH_RATE_PER_SECOND);//how often per second the draw function is called 
+          
+          var numberOfEel = random(3,5); 
+          for(var i = 0; i< numberOfEel; i++) {
+          	EelList.add(new Eel(i*100));
+          }
+          var numberOfUrchin = random(3,10); 
+          for(var b = 0; b< numberOfUrchin; b++) {
+            urchinList.add(new Urchin(b*150));
+          }
         
         }
         
@@ -30,79 +35,37 @@
         //called repeatedly 
         void draw() { 
         
-          background(0,255,255);
-        
-          slowLine.updateAndRedraw(); 
-        
-          fastLine.updateAndRedraw();  
+          background(0,255,255); 
           
-          randomUrchin.drawUrchin();
-        
-        } 
-        
-         
-        
-        class HorizontalLine { 
-          
-          //attributes
-          float ypos, speed; 
-        
-          //constructor 
-          HorizontalLine (float y, float s) {  
-        
-            ypos = y; 
-        
-            speed = s; 
-        
-          } 
-          
-          void updateAndRedraw() {
-          	update();
-          	drawLine();
+          for(var i = 0; i < EelList.size(); i++) {
+          	Eel currentEel = EelList.get(i);
+          	currentEel.drawEel();
           }
-          
-          void update() 
-          { 
-        
-            ypos += speed; 
-        
-            if (ypos > height) 
-            { 
-        
-              ypos = 0; 
-        
-            } 
-        
-        
-          } 
-          
-          void drawLine() 
-          {
-          	 line(0, ypos, width, ypos); 
-		  }
-        
-        }
-        
+        for(var b = 0; b < urchinList.size(); b++) {
+            Urchin currentUrchin = urchinList.get(b);
+            currentUrchin.drawUrchin();
+          }
+        } 
         class Urchin 
         {
-        	//attributes 
+            //attributes 
           var x, y, size, color1, color2, color3;
-        	
-        	//constructor 
-        	Urchin()
-        	{
-        		//attributes on the left, parameters on the right
-        		x = random(1,400);
-            y = random(1,400);
+            
+            //constructor 
+            Urchin(var UrchinY)
+            {
+                //attributes on the left, parameters on the right
+                x = random(1,200);
+            y = UrchinY;
             size = random(50,100);
             color1 = random(0,255);
             color2 = random(0,255);
             color3 = random(0,255); 
-        		
-        	}
-        	
-        	void drawUrchin()
-        	{
+                
+            }
+            
+            void drawUrchin()
+            {
             line(x,y,x+size/2,y+size/2);
             line(x,y,x-size/2,y+size/2);
             line(x,y,x+size/2,y-size/2);
@@ -124,6 +87,40 @@
             strokeWeight(3);
             ellipse(x,y+size/6,size/9,size/9);
             x++;
+            
+            }
+        }
+        class Eel 
+        {
+        	//attributes 
+          var eelx, eely, color1, color2, color3;
+        	
+        	//constructor 
+        	Eel(var Pos)
+        	{
+        		//attributes on the left, parameters on the right
+        		eelx = random(200,400);
+            eely = Pos;
+            size = random(50,100);
+            color1 = random(0,255);
+            color2 = random(0,255);
+            color3 = random(0,255); 
+        		
+        	}
+        	
+        	void drawEel()
+        	{
+            strokeWeight(1);
+            beginShape();
+            fill(color1, color2, color3);
+            curveVertex(418+eelx, 375+eely);
+            curveVertex(157+eelx, 207+eely);
+            curveVertex(69+eelx, 145+eely);
+            curveVertex(eelx-4,  146+eely);
+            curveVertex(153+eelx, 207+eely);
+            curveVertex(eelx-7, 18+eely);
+            endShape();
+            eelx++;
         	
         	}
         
@@ -135,4 +132,3 @@
 		<canvas id="mycanvas"></canvas>
 	</body>
 </html>
-    
