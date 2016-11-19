@@ -1,6 +1,6 @@
 <html>
 	<head>
-		<title>EelTank 2.0</title>
+		<title>FishTank 2.0</title>
 		<script src="http://cloud.github.com/downloads/processing-js/processing-js/processing-1.4.1.min.js"></script>
 		<script type="text/processing" data-processing-target="mycanvas">
        
@@ -13,9 +13,40 @@
         Fish randomFish = new Fish();
         ArrayList<Fish> FishList = new ArrayList<Fish>(); 
 
-        int WINDOW_WIDTH = 600;
-        int WINDOW_HEIGHT = 600;
+        int WINDOW_WIDTH = 650;
+        int WINDOW_HEIGHT = 650;
         PImage o;
+        int Background_y_shift = 250;
+        var drawBackground = function(By){
+        fill(90, 90, 90);
+            rect(0, 370+By, 1000, 30);
+            fill(50, 50, 50);
+            rect(0, 300+By, 200, 200);
+            triangle(200, 300+By, 200, 400+By, 400, 400+By);
+            beginShape();
+            noStroke();
+            fill(67, 247, 124);
+            curveVertex(184,  291+By);
+            curveVertex(100,  309+By);
+            curveVertex(168,  119+By)
+            curveVertex(140,  17+By);
+            curveVertex(140,  147+By);
+            curveVertex(132, 313+By);
+            curveVertex(132, 106+By);
+            endShape();
+
+            beginShape();
+            noStroke();
+            fill(67, 247, 124);
+            curveVertex(184,  291+By);
+            curveVertex(3,  309+By);
+            curveVertex(16,  119+By);
+            curveVertex(14,  17+By);
+            curveVertex(94,  147+By);
+            curveVertex(90, 313+By);
+            curveVertex(132, 106+By);
+            endShape();
+        }
 
     o = loadImage("Ocean.jpg");
 
@@ -31,15 +62,15 @@
           
           var numberOfEel = random(3,5); 
           for(var i = 0; i< numberOfEel; i++) {
-          	EelList.add(new Eel(i*100));
+          	EelList.add(new Eel(i*150+75,i*150));
           }
           var numberOfUrchin = random(3,10); 
           for(var b = 0; b< numberOfUrchin; b++) {
-            urchinList.add(new Urchin(b*150));
+            urchinList.add(new Urchin(b*150,b*300));
           }
-          var numberOfFish = random(1,4); 
+          var numberOfFish = random(2,5); 
           for(var z = 0; z < numberOfFish; z++) {
-            FishList.add(new Fish(z*250));
+            FishList.add(new Fish(z*100+70,-z*300+100));
           }
 
 
@@ -52,6 +83,8 @@
         void draw() { 
     
           image(o, 0, 0);
+
+          drawBackground(Background_y_shift);
           
           for(var i = 0; i < EelList.size(); i++) {
           	Eel currentEel = EelList.get(i);
@@ -72,12 +105,12 @@
           var x, y, size, color1, color2, color3;
             
             //constructor 
-            Urchin(var UrchinY)
+            Urchin(var UrchinY, UrchinX)
             {
                 //attributes on the left, parameters on the right
-                x = random(-100,190);
+                x = UrchinX;
             y = UrchinY;
-            size = random(50,100);
+            size = random(50,80);
             color1 = random(0,255);
             color2 = random(0,255);
             color3 = random(0,255); 
@@ -86,7 +119,7 @@
             
             void drawUrchin()
             {
-            strokeWeight(1)
+            strokeWeight(1);
             line(x,y,x+size/2,y+size/2);
             line(x,y,x-size/2,y+size/2);
             line(x,y,x+size/2,y-size/2);
@@ -108,6 +141,9 @@
             strokeWeight(3);
             ellipse(x,y+size/6,size/9,size/9);
             x++;
+            if (x > 750){
+                x = -100;
+              }
             
             }
         }
@@ -117,11 +153,11 @@
           var eelx, eely, color1, color2, color3;
         	
         	//constructor 
-        	Eel(var Pos)
+        	Eel(var why,ex)
         	{
         		//attributes on the left, parameters on the right
-        		eelx = random(220,500);
-            eely = Pos;
+        		eelx = ex;
+            eely = why;
             size = random(50,100);
             color1 = random(0,255);
             color2 = random(0,255);
@@ -131,6 +167,7 @@
         	
         	void drawEel()
         	{
+            stroke(0,0,0);
             strokeWeight(1);
             beginShape();
             fill(color1, color2, color3);
@@ -141,7 +178,11 @@
             curveVertex(153+eelx, 207+eely);
             curveVertex(eelx-7, 18+eely);
             endShape();
+            fill(0,0,0);
             eelx++;
+            if (eelx > 700){
+            eelx = -100;
+              }
         	
         	}
 
@@ -151,16 +192,16 @@
 
           var bodyLength, bodyHeight, color, bCenterY, centerX, centerY, bCenterX;
         
-         Fish(var Yy){
+         Fish(var Yy, Xx){
             centerY = Yy;
-            centerX = random(100, 100);
+            centerX = Xx;
             color = random(0, 255);
             color1 = random(0, 255);
             color2 = random(0, 255);
             bCenterY = centerY;
-            bodyLength = 118;
+            bodyLength = 80;
             bCenterX = centerX;
-            bodyHeight = 74;
+            bodyHeight = 30;
      
             }
             void drawFish() {
@@ -183,17 +224,17 @@
                 ellipse(bCenterX + 40, bCenterY - 60, 10, 10);
                 centerX ++;
                 bCenterX != centerX;
-                bCenterY--;
+                bCenterY-= 2;
                 
-                if (centerX > 600){
+                if (centerX > 700){
                     centerX = 0;
-                    centerY = random (20, 400);
-                    bCenterX = centerX;
-                    bCenterY = centerY;
-                    fill(255, 255, 255);
-                    ellipse(bCenterX + 40, bCenterY - 20, 10, 10);
-                    ellipse(bCenterX + 40, bCenterY - 40, 10, 10);
-                    ellipse(bCenterX + 40, bCenterY - 60, 10, 10);
+                     bCenterX = centerX;
+                bCenterY = centerY;
+                fill(255, 255, 255);
+                ellipse(bCenterX + 40, bCenterY - 20, 10, 10);
+                ellipse(bCenterX + 40, bCenterY - 40, 10, 10);
+                ellipse(bCenterX + 40, bCenterY - 60, 10, 10);
+                    
               }
               }
             }
