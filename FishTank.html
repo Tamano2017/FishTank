@@ -13,13 +13,15 @@
         Fish randomFish = new Fish();
         ArrayList<Fish> FishList = new ArrayList<Fish>(); 
 
-        int WINDOW_WIDTH = 650;
-        int WINDOW_HEIGHT = 650;
+        food randomfood = new food();
+        int WINDOW_WIDTH = 700;
+        int WINDOW_HEIGHT = 700;
         PImage o;
-        int Background_y_shift = 250;
+        int Background_y_shift = 300;
+
         var drawBackground = function(By){
         fill(90, 90, 90);
-            rect(0, 370+By, 1000, 30);
+            rect(0, 330+By, 1000, 100);
             fill(50, 50, 50);
             rect(0, 300+By, 200, 200);
             triangle(200, 300+By, 200, 400+By, 400, 400+By);
@@ -60,20 +62,18 @@
         
           frameRate(REFRESH_RATE_PER_SECOND);//how often per second the draw function is called 
           
-          var numberOfEel = random(3,5); 
+          var numberOfEel = random(1,6); 
           for(var i = 0; i< numberOfEel; i++) {
-          	EelList.add(new Eel(i*150+75,i*150));
+          	EelList.add(new Eel(i*150-75,i*150));
           }
-          var numberOfUrchin = random(3,10); 
+          var numberOfUrchin = random(1,10); 
           for(var b = 0; b< numberOfUrchin; b++) {
-            urchinList.add(new Urchin(b*150,b*300));
+            urchinList.add(new Urchin(b*150,b*300,b*30));
           }
-          var numberOfFish = random(2,5); 
+          var numberOfFish = random(1,3); 
           for(var z = 0; z < numberOfFish; z++) {
-            FishList.add(new Fish(z*100+70,-z*300+100));
+            FishList.add(new Fish(z*100+170,z*300+100));
           }
-
-
          o = loadImage("Ocean.jpg");
      
         }
@@ -81,11 +81,12 @@
         
         //called repeatedly 
         void draw() { 
+
     
           image(o, 0, 0);
 
           drawBackground(Background_y_shift);
-          
+
           for(var i = 0; i < EelList.size(); i++) {
           	Eel currentEel = EelList.get(i);
           	currentEel.drawEel();
@@ -98,18 +99,24 @@
             Fish currentFish = FishList.get(z);
             currentFish.drawFish();
           }
+          if(mousePressed == true){
+          randomfood.drawfood();
+          }
+
         } 
+  
         class Urchin 
         {
             //attributes 
           var x, y, size, color1, color2, color3;
             
             //constructor 
-            Urchin(var UrchinY, UrchinX)
+            Urchin(var UrchinY, UrchinX, shift)
             {
                 //attributes on the left, parameters on the right
                 x = UrchinX;
             y = UrchinY;
+            s = shift;
             size = random(50,80);
             color1 = random(0,255);
             color2 = random(0,255);
@@ -144,7 +151,10 @@
             if (x > 750){
                 x = -100;
               }
-            
+            if (mousePressed == true){
+            x = mouseX + s;
+            y = mouseY + s;
+            }
             }
         }
         class Eel 
@@ -180,7 +190,7 @@
             endShape();
             fill(0,0,0);
             eelx++;
-            if (eelx > 700){
+            if (eelx > 750){
             eelx = -100;
               }
         	
@@ -226,7 +236,7 @@
                 bCenterX != centerX;
                 bCenterY-= 2;
                 
-                if (centerX > 700){
+                if (centerX > 850){
                     centerX = 0;
                      bCenterX = centerX;
                 bCenterY = centerY;
@@ -237,6 +247,24 @@
                     
               }
               }
+            }
+            class food {
+            var foodY, foodX;
+
+            food(var Fx, var Fy){
+            foodX = Fx;
+            foodY = Fy;
+            }
+            void drawfood(){
+            noStroke();
+            fill(163,75,20);
+            foodX = mouseX;
+            foodY = mouseY;
+            ellipse(foodX+20,foodY,10,10);
+            ellipse(foodX+50,foodY,10,10);
+            ellipse(foodX-29,foodY+20,10,10);
+            ellipse(foodX,foodY+20,10,10);
+            }
             }
 
         </script> 
