@@ -18,7 +18,6 @@
         int WINDOW_HEIGHT = 700;
         PImage o;
         int Background_y_shift = 300;
-
         var drawBackground = function(By){
         fill(90, 90, 90);
             rect(0, 330+By, 1000, 100);
@@ -64,15 +63,15 @@
           
           var numberOfEel = random(1,6); 
           for(var i = 0; i< numberOfEel; i++) {
-          	EelList.add(new Eel(i*150-75,i*150));
+          	EelList.add(new Eel(i*150-75,i*150,i*150));
           }
-          var numberOfUrchin = random(1,10); 
+          var numberOfUrchin = random(1,8); 
           for(var b = 0; b< numberOfUrchin; b++) {
-            urchinList.add(new Urchin(b*150,b*300,b*30));
+            urchinList.add(new Urchin(b*150,b*300,b*60));
           }
           var numberOfFish = random(1,3); 
           for(var z = 0; z < numberOfFish; z++) {
-            FishList.add(new Fish(z*100+170,z*300+100));
+            FishList.add(new Fish(z*100+170,z*90,z*100+30));
           }
          o = loadImage("Ocean.jpg");
      
@@ -100,6 +99,8 @@
             currentFish.drawFish();
           }
           if(mousePressed == true){
+          var fX = mouseX;
+          var fY = mouseY;
           randomfood.drawfood();
           }
 
@@ -108,7 +109,9 @@
         class Urchin 
         {
             //attributes 
-          var x, y, size, color1, color2, color3;
+          var x, y, s, size, color1, color2, color3;
+
+          boolean isFeeding;
             
             //constructor 
             Urchin(var UrchinY, UrchinX, shift)
@@ -121,6 +124,7 @@
             color1 = random(0,255);
             color2 = random(0,255);
             color3 = random(0,255); 
+            isFeeding = false;
                 
             }
             
@@ -152,26 +156,33 @@
                 x = -100;
               }
             if (mousePressed == true){
-            x = mouseX + s;
-            y = mouseY + s;
-            }
+                    isFeeding = true;
+                }
+            if(isFeeding){
+                    x = mouseX + s*random(-1,1)-50;
+                    y = mouseY + s;
+                    isFeeding = false;
+                }
             }
         }
         class Eel 
         {
         	//attributes 
-          var eelx, eely, color1, color2, color3;
+          var eelx, eely, color1, color2, color3, eelS;
+          boolean isFeeding;
         	
         	//constructor 
-        	Eel(var why,ex)
+        	Eel(var why,ex,es)
         	{
         		//attributes on the left, parameters on the right
         		eelx = ex;
             eely = why;
+            eelS = es;
             size = random(50,100);
             color1 = random(0,255);
             color2 = random(0,255);
             color3 = random(0,255); 
+            isFeeding = false;
         		
         	}
         	
@@ -193,6 +204,14 @@
             if (eelx > 750){
             eelx = -100;
               }
+             if (mousePressed == true){
+                    isFeeding = true;
+                }
+            if(isFeeding){
+                    eelx = mouseX + eelS*random(-1,1);
+                    eely = mouseY + eelS*.5;
+                    isFeeding = false;
+                }
         	
         	}
 
@@ -200,11 +219,14 @@
 
         class Fish{
 
-          var bodyLength, bodyHeight, color, bCenterY, centerX, centerY, bCenterX;
+          var bodyLength, bodyHeight, color, bCenterY, centerX, centerY, bCenterX, centerShift;
+
+          boolean isFeeding;
         
-         Fish(var Yy, Xx){
+         Fish(var Yy, Xx, centerS){
             centerY = Yy;
             centerX = Xx;
+            centerShift = centerS;
             color = random(0, 255);
             color1 = random(0, 255);
             color2 = random(0, 255);
@@ -212,6 +234,7 @@
             bodyLength = 80;
             bCenterX = centerX;
             bodyHeight = 30;
+            isFeeding = false;
      
             }
             void drawFish() {
@@ -246,24 +269,29 @@
                 ellipse(bCenterX + 40, bCenterY - 60, 10, 10);
                     
               }
+            if (mousePressed == true){
+                    isFeeding = true;
+                }
+            if(isFeeding){
+                    centerX = mouseX + centerShift*random(-1,1);
+                    centerY = mouseY + centerShift;
+                    isFeeding = false;
+                }
               }
             }
             class food {
-            var foodY, foodX;
-
-            food(var Fx, var Fy){
-            foodX = Fx;
-            foodY = Fy;
+            food(){
             }
             void drawfood(){
             noStroke();
             fill(163,75,20);
-            foodX = mouseX;
-            foodY = mouseY;
-            ellipse(foodX+20,foodY,10,10);
-            ellipse(foodX+50,foodY,10,10);
-            ellipse(foodX-29,foodY+20,10,10);
-            ellipse(foodX,foodY+20,10,10);
+            ellipse(mouseX+20,mouseY,10,10);
+            ellipse(mouseX+50,mouseY,10,10);
+            ellipse(mouseX-29,mouseY+20,10,10);
+            ellipse(mouseX,mouseY+20,10,10);
+            mouseX != mouseX;
+            mouseY != mouseY;
+            mouseY++;
             }
             }
 
