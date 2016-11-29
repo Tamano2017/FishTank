@@ -18,6 +18,7 @@
         int WINDOW_HEIGHT = 700;
         PImage o;
         int Background_y_shift = 300;
+        boolean dropFood = false;
         var drawBackground = function(By){
         fill(90, 90, 90);
             rect(0, 330+By, 1000, 100);
@@ -98,10 +99,12 @@
             Fish currentFish = FishList.get(z);
             currentFish.drawFish();
           }
-          if(mousePressed == true){
-          var fX = mouseX;
-          var fY = mouseY;
           randomfood.drawfood();
+          if(mousePressed == true){
+            dropFood = true;
+          }
+          if (dropFood == true){
+            randomfood.updateAndRedraw();
           }
 
         } 
@@ -280,21 +283,32 @@
               }
             }
             class food {
-            food(){
+            var foodX, foodY;
+            food(var fX, fY){
+            foodX = fX;
+            foodY = fY;
             }
             void drawfood(){
+            foodX = mouseX;
+            foodY = mouseY;
             noStroke();
             fill(163,75,20);
-            ellipse(mouseX+20,mouseY,10,10);
-            ellipse(mouseX+50,mouseY,10,10);
-            ellipse(mouseX-29,mouseY+20,10,10);
-            ellipse(mouseX,mouseY+20,10,10);
-            mouseX != mouseX;
-            mouseY != mouseY;
-            mouseY++;
+            ellipse(foodX+20,foodY,10,10);
+            ellipse(foodX+50,foodY,10,10);
+            ellipse(foodX-29,foodY+20,10,10);
+            ellipse(foodX,foodY+20,10,10);
             }
+            void update() 
+             {
+            foodX++; 
+        
             }
+            void updateAndRedraw() {
+            update();
+            drawfood();
+             }
 
+    }
         </script> 
     </head>
     
